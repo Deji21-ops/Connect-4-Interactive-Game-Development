@@ -1,0 +1,15 @@
+{
+  "name": "connect4",
+  "version": "1.0.0",
+  "description": "Connect4 full-stack app with AI and network play",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "sqlite3": "^5.1.6",
+    "sqlite": "^4.1.0"
+  }
+}
