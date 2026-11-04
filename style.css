@@ -1,0 +1,254 @@
+:root{
+  --bg:hsl(46, 70%, 47%);   /*Background color */
+  --panel:#2019ae;          /*Panel color - Deep Blue */
+  --accent:#ffcc00;         /*Accent color - Bright Yellow */
+  --p1:#e63946;             /*Player 1 color - Red */
+  --p2:#2b8aee;             /*Player 2 color - Blue */
+  --empty:#cbd5e1;          /*Empty cell color - Light Gray */
+  --dark-bg: #071022;       /*Dark background color */
+  --panel-dark: #081320;    /*Dark panel color */
+  --text-light: #eef2ff;    /*Light text color */
+  --text-muted: #b6c6d9;    /*Muted text color */
+}
+
+
+/*RESET & BASE STYLES*/
+
+*{
+    box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body {
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial, sans-serif;
+    color:var(--text-light);
+    background:linear-gradient(180deg,var(--bg),var(--dark-bg));
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+}
+/* HEADER */
+header {
+    padding:1rem;
+    text-align:center;
+}
+/* MAIN LAYOUT */
+main {
+    display:flex;
+    gap:1rem;
+    padding:1rem;
+    align-items:flex-start
+}
+
+/* CONTROL PANEL */
+#controls {
+    flex:0 0 320px;
+    min-width: 220px;
+    background: var(--panel);
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: var(--text-light);
+}
+
+#controls label {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 500;
+}
+
+#controls input,
+#controls select {
+  display: block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: 1px solid #203040;
+  background: var(--panel-dark);
+  color: var(--text-light);
+  font-size: 1rem;
+}
+
+#controls button {
+  margin: 0.25rem 0.25rem 0.25rem 0;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: var(--dark-bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+#controls button:hover {
+  opacity: 0.9;
+}
+
+#controls button:active {
+  transform: translateY(2px);
+}
+
+.controls-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+/* GAME AREA */
+
+#gameArea {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:0.75rem;
+}
+
+#boardContainer {
+    background: linear-gradient(#072a4b, #031427);
+    padding: 0.75rem;
+    border-radius: 10px;
+}
+
+/*Cell sizeing - responsive */
+.cell-size {
+    --cell: clamp(40px, 6vw, 64px);
+}
+
+/*GAME BOARD*/
+#board {
+    display: grid;
+    grid-template-columns: repeat(7, var(--cell));
+    grid-auto-rows: var(--cell);
+    gap: 8px;
+    padding: 10px;
+    background: linear-gradient(#0a2542, #071733);
+    border-radius: 8px;
+}
+
+/*board Cells*/
+.cell {
+    width: var(--cell);
+    height: var(--cell);
+    border-radius: 50%;
+    background: var(--empty);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.25);
+    transition: 0.2s;
+}
+
+.cell:hover {
+    transform: scale(1.02);
+}
+
+/*player pieces*/
+.slot {
+    width: calc(var(--cell) - 8px);
+    height: calc(var(--cell) - 8px);
+    border-radius: 50%;
+    background: transparent;
+    display: block;
+}
+
+.cell.p1 .slot {
+    background: radial-gradient(circle at 35% 35%, var(--p1), #c62828);
+}
+
+.cell.p2 .slot {
+    background: radial-gradient(circle at 35% 35%, var(--p2), #005ec8);
+}
+
+/*winning Highlight*/
+.cell.win {
+    outline: 4px solid yellow;
+    outline-offset: 2px;
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0%, 100% { outline-color: gold;}
+    50% { outline-color: yellow; }
+}
+
+.colButton{
+    width:100%;
+    height:100%;
+    position:relative;
+    cursor: pointer;
+}
+.colButton:focus{
+    outline:3px solid yellow;
+}
+
+/*LEADERBOARD*/
+#leaderboardSection {
+    background: var(--panel);
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: var(--text-light);
+}
+
+#leaderboard {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+#leaderboard th{
+    text-align: left;
+    padding: 8px 6px;
+    border-bottom: 2px solid var(--accent);
+}
+
+#leaderboad td{
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba (255, 255, 255,0.5)
+}
+
+
+/*utility classes*/
+
+.hidden {
+    display: none !important;
+}
+
+.small {
+    font-size: 0,85rem;
+    color: var(--text-muted);
+}
+
+/* responsive design*/
+/*tablet size and smaller */
+
+@media (max-width: 1000px){
+    main {
+        flex-direction: column;
+    }
+
+    #controls {
+        flex: unset;
+        width: 100%
+    }
+
+    #leaderboardSection {
+        width: 100%
+    }
+}
+
+/*Mobile*/
+
+@media(max-width: 600px) {
+    #board {
+        gap:4px;
+        padding: 4px;
+    }
+    .cell-size {
+        --cell: clamp(35px, 10vw, 50px)
+    }
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
